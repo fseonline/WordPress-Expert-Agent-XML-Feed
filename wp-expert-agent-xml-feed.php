@@ -42,43 +42,55 @@
     $plugin_basename = plugin_basename( $plugin_path );
     $plugin_name = trim( dirname( $plugin_basename ), '/' );
 
-    $propertiesXML = 'properties.xml';
+    $filepath = esc_attr( get_option('fse_wp_expert_agent_xml_feed_remote_url') );
+    $extension = pathinfo($filepath, PATHINFO_EXTENSION);
+    $filename = basename($filepath, '.xml');
+    $propertiesXML = $filename . '.' . $extension;
 
-		$upload_dir = wp_upload_dir(); // Array of key => value pairs
-
-		$plugin_upload_dir = $upload_dir['basedir'] . '/' . $plugin_name . '/';
-		$plugin_upload_dir_xml = $upload_dir['basedir'] . '/' . $plugin_name . '/xml/';
-
-    // Create Directory /wp-uploads/plugin_name/
-		if(!file_exists( $plugin_upload_dir )) {
-			mkdir( $plugin_upload_dir, 0755, true );
-		}
-
-		// Create Directory /wp-uploads/plugin_name/xml/
-		if(!file_exists( $plugin_upload_dir_xml )) {
-			mkdir( $plugin_upload_dir_xml, 0755, true );
-		}
-
-    if( in_array('curl', get_loaded_extensions() ) ) { // Check if Curl exists in server
-      $remote_url = get_option('fse_wp_expert_agent_xml_feed_remote_url');
-      $remote_user = get_option('fse_wp_expert_agent_xml_feed_remote_user');
-      $remote_pass = get_option('fse_wp_expert_agent_xml_feed_remote_pass');
-
-      // Download latest XML file
-      // and place into the plugin's wp-uploads directory
-      $curl = curl_init();
-      $file = fopen( $plugin_upload_dir_xml . $propertiesXML, 'w');
-      curl_setopt($curl, CURLOPT_URL, $remote_url);
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($curl, CURLOPT_FILE, $file); // save into plugin's wp-uploads
-      curl_setopt($curl, CURLOPT_USERPWD, $remote_user.":".$remote_pass);
-      curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
-      curl_setopt($curl, CURLOPT_TIMEOUT, 10); // timeout in 10 seconds
-      curl_exec($curl);
-      curl_close($curl);
-      fclose($file);
+    if( $extension === 'xml' ) { // make sure it's XML since that's what we do!
+      $propertiesXML = $filename . '.' . $extension;
 
     }
+    if(isset($propertiesXML)) { // Making sure it's a valid XML file first...
+
+      $upload_dir = wp_upload_dir(); // Array of key => value pairs
+
+      $plugin_upload_dir = $upload_dir['basedir'] . '/' . $plugin_name . '/';
+      $plugin_upload_dir_xml = $upload_dir['basedir'] . '/' . $plugin_name . '/xml/';
+
+      // Create Directory /wp-uploads/plugin_name/
+      if(!file_exists( $plugin_upload_dir )) {
+        mkdir( $plugin_upload_dir, 0755, true );
+      }
+
+      // Create Directory /wp-uploads/plugin_name/xml/
+      if(!file_exists( $plugin_upload_dir_xml )) {
+        mkdir( $plugin_upload_dir_xml, 0755, true );
+      }
+
+      if( in_array('curl', get_loaded_extensions() ) ) { // Check if Curl exists in server
+        $remote_url = get_option('fse_wp_expert_agent_xml_feed_remote_url');
+        $remote_user = get_option('fse_wp_expert_agent_xml_feed_remote_user');
+        $remote_pass = get_option('fse_wp_expert_agent_xml_feed_remote_pass');
+
+        // Download latest XML file
+        // and place into the plugin's wp-uploads directory
+        $curl = curl_init();
+        $file = fopen( $plugin_upload_dir_xml . $propertiesXML, 'w');
+        curl_setopt($curl, CURLOPT_URL, $remote_url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_FILE, $file); // save into plugin's wp-uploads
+        curl_setopt($curl, CURLOPT_USERPWD, $remote_user.":".$remote_pass);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 10); // timeout in 10 seconds
+        curl_exec($curl);
+        curl_close($curl);
+        fclose($file);
+
+      }
+
+    }
+
 
 
   }
@@ -104,11 +116,11 @@
   }
 
   function wp_expert_agent_xml_feed_settings_page() {
+    fse_read_properties_xml(); // Execute the plugin
   ?>
   <div class="wrap">
     <h1>WordPress Expert Agent XML Feed</h1>
-    <!-- <form method="post" action="options.php"> -->
-    <form method="post" action="<?php esc_url( admin_url( 'options-general.php?page=' . plugin_basename( __FILE__ ) ) ); ?>">
+    <form method="post" action="options.php">
       <?php settings_fields( 'fse-settings-group' ); ?>
       <?php do_settings_sections( 'fse-settings-group' ); ?>
       <table class="form-table">
@@ -129,15 +141,6 @@
       </table>
 
       <?php submit_button(); ?>
-
-      <?php
-        // Execute the plugin upon Save Changes
-        if (isset($_POST['submit'])) {
-          fse_read_properties_xml();
-        }
-
-
-       ?>
 
     </form>
   </div>
