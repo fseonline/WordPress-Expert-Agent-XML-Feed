@@ -13,8 +13,8 @@ if(!function_exists('ftp_connect')) {
 //#STEP 1 - Connect to FTP
 file_put_contents($fileHash, json_encode(array('message' => 'Connecting', 'done' => false)));
 
-$ftp_host = 'ftp.expertagent.co.uk'; // we assume this is constant
-$ftp_port = 21; // we assume this is constant
+$ftp_host = 'ftp.expertagent.co.uk'; // this is constant
+$ftp_port = 21; // this is constant
 $ftp_timeout = 10; // 10 seconds timeout
 $ftp_username = esc_attr( get_option('fse_wp_expert_agent_xml_feed_remote_user') );
 $ftp_password = esc_attr( get_option('fse_wp_expert_agent_xml_feed_remote_pass') );
