@@ -1,9 +1,11 @@
 <?php
+// if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$fileHash = md5($_POST['file_id']);
+if (!isset( $_POST['file_id'] ) ) {
+  die();
+}
 
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once( $parse_uri[0] . 'wp-load.php' ); // so that we can use our WordPress Functions
+$fileHash = md5( $_POST['file_id'] );
 
 // Continue if FTP extension exists on the PHP server
 if(!function_exists('ftp_connect')) {
@@ -16,8 +18,8 @@ file_put_contents($fileHash, json_encode(array('message' => 'Connecting', 'done'
 $ftp_host = 'ftp.expertagent.co.uk'; // this is constant
 $ftp_port = 21; // this is constant
 $ftp_timeout = 10; // 10 seconds timeout
-$ftp_username = esc_attr( get_option('fse_wp_expert_agent_xml_feed_remote_user') );
-$ftp_password = esc_attr( get_option('fse_wp_expert_agent_xml_feed_remote_pass') );
+$ftp_username = esc_attr( get_option('fse_wpeaxf_remote_user') );
+$ftp_password = esc_attr( get_option('fse_wpeaxf_remote_pass') );
 
 $ftp_connection = ftp_connect($ftp_host, $ftp_port, $ftp_timeout);
 if ($ftp_connection === false) {
@@ -32,7 +34,7 @@ if ($ftp_connection === false) {
 $plugin_basename = plugin_basename( __FILE__ );
 $plugin_name = trim( dirname( $plugin_basename ), '/' );
 
-$file = esc_attr( get_option('fse_wp_expert_agent_xml_feed_remote_file') );
+$file = esc_attr( get_option('fse_wpeaxf_remote_file') );
 $extension = pathinfo($file, PATHINFO_EXTENSION);
 $filename = basename($file, '.xml');
 

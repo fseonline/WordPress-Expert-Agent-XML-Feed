@@ -19,6 +19,8 @@
 
    */
 
+   if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 
   /**
   * Read XML file from Expert Agent
@@ -26,60 +28,61 @@
   * @link http://expertagent.co.uk/
   */
 
-  register_activation_hook(__FILE__, 'do_activation');
+  register_activation_hook(__FILE__, 'fse_wpeaxf_do_activation');
 
   /**
   * Fetch the XML file daily through wp-cron.php from within Plugin's cron.php
   * @link http://expertagent.co.uk/
   */
-  add_action( 'check_daily', 'fse_download_xml' );
+  add_action( 'check_daily', 'fse_wpeaxf_download_xml' );
 
-  function do_activation() {
+  function fse_wpeaxf_do_activation() {
     if ( !wp_next_scheduled( 'check_daily' ) ) {
 	     wp_schedule_event( time(), 'daily', 'check_daily' );
     }
   }
-  function fse_download_xml() {
+  function fse_wpeaxf_download_xml() {
     include('cron.php');
-    cron();
+    fse_wpeaxf_cron();
   }
 
 
   // Create custom plugin settings menu
-  add_action('admin_menu', 'fse_wp_expert_agent_xml_feed_create_menu');
+  add_action('admin_menu', 'fse_wpeaxf_create_menu');
 
-  function fse_wp_expert_agent_xml_feed_create_menu() {
+  function fse_wpeaxf_create_menu() {
 
   	// Add plugin's settings page under 'Settings'
-    add_submenu_page( 'options-general.php', 'WordPress Expert Agent XML Feed', 'WordPress Expert Agent XML Feed', 'administrator', __FILE__, 'wp_expert_agent_xml_feed_settings_page' );
+    add_submenu_page( 'options-general.php', 'WordPress Expert Agent XML Feed', 'WordPress Expert Agent XML Feed', 'administrator', __FILE__, 'fse_wpeaxf_settings_page' );
 
   	// Call register settings function
-  	add_action( 'admin_init', 'register_wp_expert_agent_xml_feed_settings' );
+  	add_action( 'admin_init', 'fse_wpeaxf_register_settings' );
   }
 
-  function register_wp_expert_agent_xml_feed_settings() {
+  function fse_wpeaxf_register_settings() {
   	// Register our settings
-  	register_setting( 'fse-settings-group', 'fse_wp_expert_agent_xml_feed_remote_file' );
-  	register_setting( 'fse-settings-group', 'fse_wp_expert_agent_xml_feed_remote_user' );
-  	register_setting( 'fse-settings-group', 'fse_wp_expert_agent_xml_feed_remote_pass' );
+  	register_setting( 'fse_wpeaxf_settings_group', 'fse_wpeaxf_remote_file' );
+  	register_setting( 'fse_wpeaxf_settings_group', 'fse_wpeaxf_remote_user' );
+  	register_setting( 'fse_wpeaxf_settings_group', 'fse_wpeaxf_remote_pass' );
   }
 
-  function wp_expert_agent_xml_feed_settings_page() {
+  function fse_wpeaxf_settings_page() {
     include('settings.php');
+    include('ajax.php');
 
   }
 
-  function fse_plugin_action_links( $links ) {
+  function fse_wpeaxf_plugin_action_links( $links ) {
   	$links = array_merge( array(
   		'<a href="' . esc_url( admin_url( 'options-general.php?page=' . plugin_basename( __FILE__ ) ) ) . '">' . 'Settings' . '</a>'
   	), $links );
   	return $links;
   }
-  add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'fse_plugin_action_links' );
+  add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'fse_wpeaxf_plugin_action_links' );
 
 
-  register_deactivation_hook( __FILE__, 'do_deactivation' );
+  register_deactivation_hook( __FILE__, 'fse_wpeaxf_do_deactivation' );
 
-  function do_deactivation() {
-  	wp_clear_scheduled_hook( 'fse_download_xml' );
+  function fse_wpeaxf_do_deactivation() {
+  	wp_clear_scheduled_hook( 'fse_wpeaxf_download_xml' );
   }

@@ -6,7 +6,9 @@
  * XML file on the FTP server once daily.
  */
 
-function cron() {
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+function fse_wpeaxf_cron() {
 
   $fileHash = md5($_POST['file_id']);
 

@@ -1,5 +1,5 @@
 <?php
-
+// if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $response = array('message' => 'Connecting', 'done' => false);
 $fileHash = md5($_POST['file_id']);
