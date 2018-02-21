@@ -21,11 +21,14 @@
    <?php
      $plugin_path = __FILE__;
      $plugin_basename = plugin_basename( $plugin_path );
+
+     // Generate a custom nonce value.
+		$fse_wpeaxf_add_meta_nonce = wp_create_nonce( 'fse_wpeaxf_add_meta_form_nonce' );
     ?>
    <div class="wrap">
     <h1>WordPress Expert Agent XML Feed</h1>
 
-     <form id="fse_wpeaxf" method="post" action="options.php">
+     <form id="fse_wpeaxf" method="post" action="<?php echo admin_url( 'admin-post.php' ); ?>">
        <?php settings_fields( 'fse_wpeaxf_settings_group' ); ?>
        <?php do_settings_sections( 'fse_wpeaxf_settings_group' ); ?>
        <table class="form-table">
@@ -48,53 +51,12 @@
 
        <p>
          <?php submit_button('Fetch XML File', 'primary', 'Fetch XML File', false); ?>
-
        </p>
 
+       <input type="hidden" name="action" value="fse_wpeaxf_send">
+       <input type="hidden" name="fse_wpeaxf_add_form_nonce" value="<?php echo $fse_wpeaxf_add_meta_nonce ?>" />
+
        <div id="data"></div>
-
-         <script>
-
-           jQuery(function($) {
-             $('#fse_wpeaxf').submit(function(e) {
-               var b;
-               e.preventDefault();
-               b = $(this).serialize();
-               $.post( 'options.php', b, function() { // after posting form to WP
-                 $.ajax({
-                   type: 'POST',
-                   url: '<?php echo plugins_url( 'ajax.php', $plugin_path ); ?>',
-                   dataType: 'html',
-                   data: {
-                     a: 'ftp_download',
-                     file_id: 1
-                   }
-                 });
-                 checkStatus(1);
-
-               });
-
-               return false;
-             });
-           });
-           function checkStatus(idFile) {
-             jQuery.ajax({
-               type: 'POST',
-               url: '<?php echo plugins_url( 'check_status.php', $plugin_path ); ?>',
-               dataType: 'JSON',
-               data: {
-                 file_id: idFile
-               },
-               success: function(response) {
-                 jQuery('#data').html(response.message);
-                 if (response.done != true) {
-                   setTimeout("checkStatus(" + idFile + ")", 1000);
-                 }
-               }
-             });
-           }
-
-         </script>
 
      </form>
 
