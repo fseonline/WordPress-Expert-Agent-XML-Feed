@@ -12,6 +12,8 @@
  * @subpackage fse_wpeaxf/inc/admin/views
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 
 /**
  * The form to be loaded on the plugin's admin page
@@ -44,21 +46,21 @@ if( current_user_can( 'edit_users' ) ) {
 			<tr valign="top">
 				<th scope="row"><?php _e('Remote File', $this->plugin_name); ?></th>
 				<td>
-					<input id="<?php echo $this->plugin_name; ?>-remote_file" type="text" name="<?php echo "fse_wpeaxf"; ?>[remote_file]" value="" placeholder="<?php _e('e.g. properties.xml', $this->plugin_name);?>" size="33" required />
+					<input id="<?php echo $this->plugin_name; ?>-remote_file" type="text" name="<?php echo "fse_wpeaxf"; ?>[remote_file]" value="<?php echo esc_attr( get_option('fse_wpeaxf_remote_file') ); ?>" placeholder="<?php _e('e.g. properties.xml', $this->plugin_name);?>" size="33" required />
 				</td>
 			</tr>
 
 			<tr valign="top">
 				<th scope="row"><?php _e('Remote User', $this->plugin_name); ?></th>
 				<td>
-					<input id="<?php echo $this->plugin_name; ?>-remote_user" type="text" name="<?php echo "fse_wpeaxf"; ?>[remote_user]" value="" placeholder="<?php _e('e.g. Excellent Agency', $this->plugin_name);?>" size="33" required />
+					<input id="<?php echo $this->plugin_name; ?>-remote_user" type="text" name="<?php echo "fse_wpeaxf"; ?>[remote_user]" value="<?php echo esc_attr( get_option('fse_wpeaxf_remote_user') ); ?>" placeholder="<?php _e('e.g. Excellent Agency', $this->plugin_name);?>" size="33" required />
 				</td>
 			</tr>
 
 			<tr valign="top">
 				<th scope="row"><?php _e('Remote Password', $this->plugin_name); ?></th>
 				<td>
-					<input id="<?php echo $this->plugin_name; ?>-remote_pass" type="password" name="<?php echo "fse_wpeaxf"; ?>[remote_pass]" value="" size="33" required />
+					<input id="<?php echo $this->plugin_name; ?>-remote_pass" type="password" name="<?php echo "fse_wpeaxf"; ?>[remote_pass]" value="<?php echo esc_attr( get_option('fse_wpeaxf_remote_pass') ); ?>" size="33" required />
 				</td>
 			</tr>
 

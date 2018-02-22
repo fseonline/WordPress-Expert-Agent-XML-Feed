@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 namespace fse_wpeaxf\Inc\Admin;
 
 /**
@@ -59,50 +61,20 @@ namespace fse_wpeaxf\Inc\Admin;
  	}
 
  	/**
- 	 * Register the JavaScript for the admin area.
- 	 *
- 	 * @since    1.0.0
- 	 */
- 	public function enqueue_scripts() {
-
- 		$params = array ( 'ajaxurl' => admin_url( 'admin-ajax.php' ) );
- 		wp_enqueue_script( 'fse_wpeaxf_ajax_handle', plugin_dir_url( __FILE__ ) . 'js/wp-expert-agent-xml-feed-admin-ajax-handler.js', array( 'jQuery' ), $this->version, false );
- 		wp_localize_script( 'fse_wpeaxf_ajax_handle', 'params', $params );
-
- 	}
-
- 	/**
  	 * Callback for the admin menu
  	 *
  	 * @since    1.0.0
  	 */
  	public function add_plugin_admin_menu() {
 
- 		add_menu_page(	__( 'Admin Form Demo', $this->plugin_text_domain ), //page title
- 						__( 'Admin Form Demo', $this->plugin_text_domain ), //menu title
- 						'manage_options', //capability
- 						$this->plugin_name //menu_slug
+ 		$form_page_hook = add_submenu_page(
+          'options-general.php', //parent slug
+          __( 'WordPress Expert Agent XML Feed', $this->plugin_text_domain ), //page title
+          __( 'WordPress Expert Agent XML Feed', $this->plugin_text_domain ), //menu title
+          'manage_options', //capability
+          $this->plugin_name, //menu_slug
+          array( $this, 'html_form_page_content' ) //callback for page content
  					);
-
- 		 // Add a submenu page and save the returned hook suffix.
- 		$html_form_page_hook = add_submenu_page(
- 									$this->plugin_name, //parent slug
- 									__( 'Admin Form Demo', $this->plugin_text_domain ), //page title
- 									__( 'HTML Form Submit', $this->plugin_text_domain ), //menu title
- 									'manage_options', //capability
- 									$this->plugin_name, //menu_slug
- 									array( $this, 'html_form_page_content' ) //callback for page content
- 									);
-
- 		// Add a submenu page and save the returned hook suffix.
- 		$ajax_form_page_hook = add_submenu_page(
- 									$this->plugin_name, //parent slug
- 									__( 'Admin Form Demo', $this->plugin_text_domain ), //page title
- 									__( 'Ajax Form Sumit', $this->plugin_text_domain ), //menu title
- 									'manage_options', //capability
- 									$this->plugin_name . '-ajax', //menu_slug
- 									array( $this, 'ajax_form_page_content' ) //callback for page content
- 									);
 
  		/*
  		 * The $page_hook_suffix can be combined with the load-($page_hook) action hook
@@ -110,8 +82,7 @@ namespace fse_wpeaxf\Inc\Admin;
  		 *
  		 * The callback below will be called when the respective page is loaded
  		 */
- 		add_action( 'load-'.$html_form_page_hook, array( $this, 'loaded_html_form_submenu_page' ) );
- 		add_action( 'load-'.$ajax_form_page_hook, array( $this, 'loaded_ajax_form_submenu_page' ) );
+ 		add_action( 'load-'.$form_page_hook, array( $this, 'loaded_form_submenu_page' ) );
  	}
 
  	/*
@@ -127,18 +98,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	}
 
  	/*
- 	 * Callback for the add_submenu_page action hook
- 	 *
- 	 * The plugin's HTML Ajax is loaded from here
- 	 *
- 	 * @since	1.0.0
- 	 */
- 	public function ajax_form_page_content() {
- 		include_once( 'views/partials-ajax-form-view.php' );
- 	}
-
- 	/*
- 	 * Callback for the load-($html_form_page_hook)
+ 	 * Callback for the load-($form_page_hook)
  	 * Called when the plugin's submenu HTML form page is loaded
  	 *
  	 * @since	1.0.0
@@ -147,15 +107,22 @@ namespace fse_wpeaxf\Inc\Admin;
  		// called when the particular page is loaded.
  	}
 
- 	/*
- 	 * Callback for the load-($ajax_form_page_hook)
- 	 * Called when the plugin's submenu Ajax form page is loaded
- 	 *
- 	 * @since	1.0.0
- 	 */
- 	public function loaded_ajax_form_submenu_page() {
- 		// called when the particular page is loaded.
- 	}
+  /**
+  * Fetch the XML file daily through wp-cron.php from within Plugin's cron.php
+  * @link     http://expertagent.co.uk/
+  *
+  * @since    1.0.0
+  */
+  // add_action( 'check_daily', 'fse_wpeaxf_download_xml' );
+
+  public function fse_wpeaxf_do_activation() {
+    if ( !wp_next_scheduled( 'check_daily' ) ) {
+	     wp_schedule_event( time(), 'daily', 'check_daily' );
+    }
+  }
+  public function fse_wpeaxf_download_xml() {
+    $this->download_xml( $fse_wpeaxf_remote_file, $fse_wpeaxf_remote_user, $fse_wpeaxf_remote_pass );
+  }
 
  	/**
  	 *
@@ -168,19 +135,12 @@ namespace fse_wpeaxf\Inc\Admin;
  			$fse_wpeaxf_remote_user = sanitize_user( $_POST['fse_wpeaxf']['remote_user'] ); // sanitize the FTP username
       $fse_wpeaxf_remote_pass = $_POST['fse_wpeaxf']['remote_pass'];
 
-
+      update_option( 'fse_wpeaxf_remote_file', $fse_wpeaxf_remote_file );
+      update_option( 'fse_wpeaxf_remote_user', $fse_wpeaxf_remote_user );
+      update_option( 'fse_wpeaxf_remote_pass', $fse_wpeaxf_remote_pass );
 
  			// server processing logic
-
       $this->download_xml( $fse_wpeaxf_remote_file, $fse_wpeaxf_remote_user, $fse_wpeaxf_remote_pass );
-
- 			if( isset( $_POST['ajaxrequest'] ) && $_POST['ajaxrequest'] === 'true' ) {
- 				// server response
- 				echo '<pre>';
- 					print_r( $_POST );
- 				echo '</pre>';
- 				wp_die();
-             }
 
  			// server response
  			$admin_notice = "success";
@@ -220,7 +180,7 @@ namespace fse_wpeaxf\Inc\Admin;
  		  if ( isset( $_REQUEST['fse_wpeaxf_admin_add_notice'] ) ) {
  			if( $_REQUEST['fse_wpeaxf_admin_add_notice'] === "success") {
         $plugin_basename = explode("/", plugin_basename( __FILE__ ), 2)[0]; // get the plugin's directory name
-        $file = sanitize_file_name( $_REQUEST['fse_wpeaxf']['remote_file'] );
+        $file = esc_attr( get_option('fse_wpeaxf_remote_file') );
         $upload_dir = wp_upload_dir(); // Array of key => value pairs
         $plugin_upload_dir_xml = $upload_dir['basedir'] . '/' . $plugin_basename . '/xml/';
         $local_file_path = $plugin_upload_dir_xml . $file;
@@ -256,24 +216,23 @@ namespace fse_wpeaxf\Inc\Admin;
       $ftp_username = $remote_user;
       $ftp_password = $remote_pass;
 
-      $ftp_connection = ftp_connect($ftp_host, $ftp_port, $ftp_timeout);
-      if ($ftp_connection === false) {
-      }
-      $login_result = ftp_login($ftp_connection, $ftp_username, $ftp_password);
-      if ($ftp_connection === false) {
-      }
-
-      //#STEP 2 - Download File
-      $plugin_basename = explode("/", plugin_basename( __FILE__ ), 2)[0]; // get the plugin's directory name
-
       $file = $remote_file;
       $extension = pathinfo($file, PATHINFO_EXTENSION); // gotta be 'xml'
       $filename = basename($file, '.xml');
 
       // make sure it's XML since that's what we do!
       if( $extension !== 'xml' ) {
-        error( 'Please specify an XML file.' );
+        update_option( 'fse_wpeaxf_remote_file', '' );
+        exit( 'File does not exist. Please specify an XML file. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>.' );
       }
+
+      //#STEP 2 - Download File
+      $ftp_connection = ftp_connect($ftp_host, $ftp_port, $ftp_timeout);
+
+      $login_result = ftp_login($ftp_connection, $ftp_username, $ftp_password);
+
+      $plugin_basename = explode("/", plugin_basename( __FILE__ ), 2)[0]; // get the plugin's directory name
+
 
       $upload_dir = wp_upload_dir(); // Array of key => value pairs
       $plugin_upload_dir = $upload_dir['basedir'] . '/' . $plugin_basename . '/';
@@ -296,7 +255,7 @@ namespace fse_wpeaxf\Inc\Admin;
       ftp_get( $ftp_connection, $local_file_path, $server_file_path, FTP_BINARY );
       ftp_close( $ftp_connection );
     } else {
-      error( 'Please enable FTP on your server before proceeding.' );
+      exit( 'Please enable FTP on your server before proceeding. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
     }
   }
 

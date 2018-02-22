@@ -1,9 +1,10 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 namespace fse_wpeaxf\Inc\Core;
 use fse_wpeaxf as NS;
 use fse_wpeaxf\Inc\Admin as Admin;
-use fse_wpeaxf\Inc\Frontend as Frontend;
 
 /**
  * The core plugin class.
@@ -111,14 +112,13 @@ use fse_wpeaxf\Inc\Frontend as Frontend;
 
  		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+ 		$this->loader->add_action( 'check_daily', $plugin_admin, 'fse_wpeaxf_download_xml' );
+
  		//Add a top-level admin menu for our plugin
  		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
 
  		//when a form is submitted to admin-post.php
  		$this->loader->add_action( 'admin_post_fse_wpeaxf_form_response', $plugin_admin, 'the_form_response');
-
- 		//when a form is submitted to admin-ajax.php
- 		$this->loader->add_action( 'wp_ajax_fse_wpeaxf_form_response', $plugin_admin, 'the_form_response');
 
  		// Register admin notices
  		$this->loader->add_action( 'admin_notices', $plugin_admin, 'print_plugin_admin_notices');
@@ -131,8 +131,6 @@ use fse_wpeaxf\Inc\Frontend as Frontend;
  	 * @access    private
  	 */
  	private function define_public_hooks() {
-
- 		$plugin_public = new Frontend\Frontend( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_text_domain() );
 
  		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
  		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );

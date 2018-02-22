@@ -3,7 +3,7 @@ Contributors: fseonline
 Tags: expert agent, xml, plugin, admin, cron, wp-cron
 Tested up to: 4.9
 
-WordPress Expert Agent XML Feed lets you fetch the latest XML feed from your Expert Agent property feed.
+WordPress Expert Agent XML Feed relies on the Expert Agent FTP to let you fetch the latest XML feed from your Expert Agent property feed.
 
 == Description ==
 
