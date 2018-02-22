@@ -1,7 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 namespace fse_wpeaxf\Inc\Core;
 use fse_wpeaxf as NS;
 use fse_wpeaxf\Inc\Admin as Admin;
@@ -110,8 +108,6 @@ use fse_wpeaxf\Inc\Admin as Admin;
 
  		$plugin_admin = new Admin\Admin( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_text_domain() );
 
- 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
  		$this->loader->add_action( 'check_daily', $plugin_admin, 'fse_wpeaxf_download_xml' );
 
  		//Add a top-level admin menu for our plugin
@@ -131,9 +127,6 @@ use fse_wpeaxf\Inc\Admin as Admin;
  	 * @access    private
  	 */
  	private function define_public_hooks() {
-
- 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
- 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
  	}
 

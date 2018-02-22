@@ -33,8 +33,6 @@
 
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 namespace fse_wpeaxf;
 
 // If this file is called directly, abort.

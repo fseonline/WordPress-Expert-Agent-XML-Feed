@@ -1,7 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 namespace fse_wpeaxf\Inc\Admin;
 
 /**
@@ -103,7 +101,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	 *
  	 * @since	1.0.0
  	 */
- 	public function loaded_html_form_submenu_page() {
+ 	public function loaded_form_submenu_page() {
  		// called when the particular page is loaded.
  	}
 
@@ -227,11 +225,17 @@ namespace fse_wpeaxf\Inc\Admin;
       }
 
       //#STEP 2 - Download File
-      $ftp_connection = ftp_connect($ftp_host, $ftp_port, $ftp_timeout);
+      $ftp_connection = ftp_connect( $ftp_host, $ftp_port, $ftp_timeout );
+      if( !$ftp_connection ) {
+        exit( 'Could not connect to FTP at the moment. Please check your FTP server status and try again. <br />If unsure, please contact Expert Agent at support@expertagent.co.uk <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
+      }
 
-      $login_result = ftp_login($ftp_connection, $ftp_username, $ftp_password);
+      $login_result = ftp_login( $ftp_connection, $ftp_username, $ftp_password );
+      if( !$login_result ) {
+        exit( 'Login details did not match. Please check your FTP login details and try again. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
+      }
 
-      $plugin_basename = explode("/", plugin_basename( __FILE__ ), 2)[0]; // get the plugin's directory name
+      $plugin_basename = explode( "/", plugin_basename( __FILE__ ), 2 )[0]; // get the plugin's directory name
 
 
       $upload_dir = wp_upload_dir(); // Array of key => value pairs

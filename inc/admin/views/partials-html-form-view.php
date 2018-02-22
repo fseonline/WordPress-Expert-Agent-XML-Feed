@@ -12,8 +12,6 @@
  * @subpackage fse_wpeaxf/inc/admin/views
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 
 /**
  * The form to be loaded on the plugin's admin page
