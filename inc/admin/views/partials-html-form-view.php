@@ -41,7 +41,7 @@ if( current_user_can( 'edit_users' ) ) {
 		<?php settings_fields( 'fse_wpeaxf_settings_group' ); ?>
 		<?php do_settings_sections( 'fse_wpeaxf_settings_group' ); ?>
 		<table class="form-table">
-			<p>Please enter your FTP login details as provided by Expert Agent (<a target="_blank" href="http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed">more info here</a>) so that we can fetch daily your XML feed.</p>
+			<p>Please enter your FTP login details as provided by Expert Agent (<a target="_blank" href="http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed">more info here</a>) so that we can fetch daily for your XML feed.</p>
 			<tr valign="top">
 				<th scope="row"><?php _e('Remote File', $this->plugin_name); ?></th>
 				<td>

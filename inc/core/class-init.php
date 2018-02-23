@@ -62,7 +62,6 @@ use fse_wpeaxf\Inc\Admin as Admin;
  		$this->load_dependencies();
  		$this->set_locale();
  		$this->define_admin_hooks();
- 		$this->define_public_hooks();
  	}
 
  	/**
@@ -108,9 +107,13 @@ use fse_wpeaxf\Inc\Admin as Admin;
 
  		$plugin_admin = new Admin\Admin( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_text_domain() );
 
+    // Add plugin's cron job
  		$this->loader->add_action( 'fse_wpeaxf_check_daily', $plugin_admin, 'do_cron_job' );
 
- 		//Add a top-level admin menu for our plugin
+    // Setup plugin action links found on the Plugins page
+ 		$this->loader->add_filter( 'plugin_action_links_' . $this->plugin_basename, $plugin_admin, 'plugin_action_links' );
+
+ 		// Add a top-level admin menu for our plugin
  		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
 
  		// When a form is submitted to admin-post.php
@@ -118,16 +121,6 @@ use fse_wpeaxf\Inc\Admin as Admin;
 
  		// Register admin notices
  		$this->loader->add_action( 'admin_notices', $plugin_admin, 'print_plugin_admin_notices');
- 	}
-
- 	/**
- 	 * Register all of the hooks related to the public-facing functionality
- 	 * of the plugin.
- 	 *
- 	 * @access    private
- 	 */
- 	private function define_public_hooks() {
-
  	}
 
  	/**

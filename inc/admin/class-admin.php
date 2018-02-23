@@ -58,6 +58,14 @@ namespace fse_wpeaxf\Inc\Admin;
 
  	}
 
+
+  public function plugin_action_links($links) {
+
+    $settings_link = '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __( 'Settings', $this->plugin_name ) . '</a>';
+    array_unshift($links, $settings_link);
+    return $links;
+  }
+
  	/**
  	 * Callback for the admin menu
  	 *
