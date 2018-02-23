@@ -11,7 +11,9 @@ WordPress Expert Agent XML Feed relies on the 3rd Party Expert Agent FTP to let 
 
 == Description ==
 
-WordPress Expert Agent XML Feed lets you fetch the latest XML feed from your 3rd Party [Expert Agent property XML feed](http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed). From the admin screen you can:
+WordPress Expert Agent XML Feed lets you fetch the latest XML feed from your 3rd Party [Expert Agent property XML feed](http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed).
+
+From the admin screen you can:
  * Add Remote File
  * Add Remote User login details
  * Fetch the latest XML feed manually via the button 'Fetch XML File'
@@ -24,7 +26,7 @@ WordPress Expert Agent XML Feed lets you fetch the latest XML feed from your 3rd
 
 = How do I know that the XML feed is working? =
 
-After you've specified your FTP server and login details which Expert Agent will have provided, you will have to click the button 'Fetch XML File'. Afterwards, a prompt below the button will appear, and will mention if the file download is successful.
+After you've specified your FTP server and login details which Expert Agent will have provided, you will have to click the button 'Fetch XML File'. Afterwards, a successful notice should appear, and will mention if the file download is successful.
 
 = Is this the official plugin from Expert Agent? =
 
@@ -32,7 +34,9 @@ Unfortunately not yet, but we are working with Expert Agent to make sure that th
 
 = Where can I find my Remote URL, User, and Password login details? =
 
+These are the FTP details given to you by Expert Agent.
 You will need to create a Log Ticket through the Expert Agent Management system, informing them that you would like to ask for the XML feed FTP login details.
+You can also email them at [support@expertagent.co.uk](mailto:support@expertagent.co.uk)
 
 = The XML feed is now working, how do I extract its data? =
 
@@ -42,7 +46,7 @@ Unfortunately this plugin does not provide extracting the data. It is up to you 
 
 This is the proper place for a plugin to generate its files.
 
-= How can I output/use the XML file? =
+= Can you give me an example on how I can output/use the XML file? =
 
 It is up to you or your developer to extract the data, e.g. using PHP through [simpleXML](http://php.net/manual/en/simplexml.examples-basic.php).
 
@@ -77,6 +81,7 @@ For example, let us get the 'Property of the Week':
     } ?>
     <div class="property__title"><?php echo $propertyofweek_advert_heading; ?></div>
   <?php endif; ?>
+?>
 `
 
 == Screenshots ==

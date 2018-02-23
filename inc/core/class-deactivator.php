@@ -23,6 +23,7 @@ class Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+		// cron job will refresh upon deactivate already 
 
 	}
 

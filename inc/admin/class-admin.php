@@ -74,13 +74,6 @@ namespace fse_wpeaxf\Inc\Admin;
           array( $this, 'html_form_page_content' ) //callback for page content
  					);
 
- 		/*
- 		 * The $page_hook_suffix can be combined with the load-($page_hook) action hook
- 		 * https://codex.wordpress.org/Plugin_API/Action_Reference/load-(page)
- 		 *
- 		 * The callback below will be called when the respective page is loaded
- 		 */
- 		add_action( 'load-'.$form_page_hook, array( $this, 'loaded_form_submenu_page' ) );
  	}
 
  	/*
@@ -93,16 +86,6 @@ namespace fse_wpeaxf\Inc\Admin;
  	public function html_form_page_content() {
  		//show the form
  		include_once( 'views/partials-html-form-view.php' );
- 	}
-
- 	/*
- 	 * Callback for the load-($form_page_hook)
- 	 * Called when the plugin's submenu HTML form page is loaded
- 	 *
- 	 * @since	1.0.0
- 	 */
- 	public function loaded_form_submenu_page() {
- 		// called when the particular page is loaded.
  	}
 
   /**
@@ -121,7 +104,7 @@ namespace fse_wpeaxf\Inc\Admin;
   }
 
  	/**
- 	 *
+ 	 * After form submit, check it's all good
  	 * @since    1.0.0
  	 */
  	public function the_form_response() {
@@ -161,7 +144,7 @@ namespace fse_wpeaxf\Inc\Admin;
  		wp_redirect( esc_url_raw( add_query_arg( array(
  									'fse_wpeaxf_admin_add_notice' => $admin_notice,
  									),
- 							admin_url('admin.php?page='. $this->plugin_name )
+ 							admin_url( 'admin.php?page='. $this->plugin_name )
  					) ) );
 
  	}
@@ -256,8 +239,11 @@ namespace fse_wpeaxf\Inc\Admin;
       ftp_pasv( $ftp_connection, true ); // So we don't get a BINARY Warning...
       ftp_get( $ftp_connection, $local_file_path, $server_file_path, FTP_BINARY );
       ftp_close( $ftp_connection );
+
     } else {
+
       exit( 'Please enable FTP on your server before proceeding. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
+
     }
   }
 
