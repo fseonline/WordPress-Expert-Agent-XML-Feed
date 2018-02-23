@@ -1,13 +1,17 @@
 === WordPress Expert Agent XML Feed ===
 Contributors: fseonline
 Tags: expert agent, xml, plugin, admin, cron, wp-cron
-Tested up to: 4.9
+Tested up to: 4.9.4
+Stable tag: 4.9.4
+Requires PHP: 5.6
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress Expert Agent XML Feed relies on the Expert Agent FTP to let you fetch the latest XML feed from your Expert Agent property feed.
+WordPress Expert Agent XML Feed relies on the 3rd Party Expert Agent FTP to let you fetch the latest XML feed from your Expert Agent property feed.
 
 == Description ==
 
-WordPress Expert Agent XML Feed lets you fetch the latest XML feed from your Expert Agent property feed. From the admin screen you can:
+WordPress Expert Agent XML Feed lets you fetch the latest XML feed from your 3rd Party [Expert Agent property XML feed](http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed). From the admin screen you can:
  * Add Remote File
  * Add Remote User login details
  * Fetch the latest XML feed manually via the button 'Fetch XML File'

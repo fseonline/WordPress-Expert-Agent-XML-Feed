@@ -37,3 +37,6 @@ $plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WH
 foreach( $plugin_options as $option ) {
     delete_option( $option->option_name );
 }
+
+// Unschedule cron job
+wp_clear_scheduled_hook('fse_wpeaxf_check_daily');
