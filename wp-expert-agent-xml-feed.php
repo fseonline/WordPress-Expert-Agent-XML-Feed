@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       WordPress Expert Agent XML Feed
- * Description:       Fetch daily for your specified Expert Agent XML feed using wp-cron.
+ * Description:       Fetch daily for your specified Expert Agent XML feed using the WP-Cron system.
  * Version:           1.0.0
  * Author:            FSE Online Ltd
  * Author URI:        http://www.fse-online.co.uk/?utm_source=wordpress&utm_medium=plugin&utm_campaign=WordPress%20Expert%20Agent%20XML%20Feed

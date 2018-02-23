@@ -84,6 +84,10 @@ For example, let us get the 'Property of the Week':
 ?>
 `
 
+= What is a cron job? =
+
+It's your web server's built-in scheduler, so that you can action code depending on the time. WordPress has wp-cron.php which integrates WordPress with your server's cron system.
+
 == Screenshots ==
 
 1. Add your FTP login details as provided by Expert Agent. Contact Expert Agent if you have forgotten your XML feed FTP login details.
