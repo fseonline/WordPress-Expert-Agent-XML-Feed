@@ -32,6 +32,12 @@ class Activator {
 			wp_die( 'This plugin requires a minimum PHP Version of ' . $min_php );
 		}
 
+		// Add our daily cron job to fetch XML file if it doesn't exist yet
+    if ( !wp_next_scheduled( 'fse_wpeaxf_check_daily' ) ) {
+			wp_schedule_event( time(), 'daily', 'fse_wpeaxf_check_daily' );
+    }
+
+
 	}
 
 }

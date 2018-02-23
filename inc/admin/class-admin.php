@@ -111,15 +111,13 @@ namespace fse_wpeaxf\Inc\Admin;
   *
   * @since    1.0.0
   */
-  // add_action( 'check_daily', 'fse_wpeaxf_download_xml' );
+  public function do_cron_job() {
+    $fse_wpeaxf_remote_file = esc_attr( get_option('fse_wpeaxf_remote_file') );
+    $fse_wpeaxf_remote_user = esc_attr( get_option('fse_wpeaxf_remote_user') );
+    $fse_wpeaxf_remote_pass = esc_attr( get_option('fse_wpeaxf_remote_pass') );
 
-  public function fse_wpeaxf_do_activation() {
-    if ( !wp_next_scheduled( 'check_daily' ) ) {
-	     wp_schedule_event( time(), 'daily', 'check_daily' );
-    }
-  }
-  public function fse_wpeaxf_download_xml() {
     $this->download_xml( $fse_wpeaxf_remote_file, $fse_wpeaxf_remote_user, $fse_wpeaxf_remote_pass );
+
   }
 
  	/**

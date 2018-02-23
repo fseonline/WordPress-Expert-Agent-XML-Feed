@@ -108,12 +108,12 @@ use fse_wpeaxf\Inc\Admin as Admin;
 
  		$plugin_admin = new Admin\Admin( $this->get_plugin_name(), $this->get_version(), $this->get_plugin_text_domain() );
 
- 		$this->loader->add_action( 'check_daily', $plugin_admin, 'fse_wpeaxf_download_xml' );
+ 		$this->loader->add_action( 'fse_wpeaxf_check_daily', $plugin_admin, 'do_cron_job' );
 
  		//Add a top-level admin menu for our plugin
  		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
 
- 		//when a form is submitted to admin-post.php
+ 		// When a form is submitted to admin-post.php
  		$this->loader->add_action( 'admin_post_fse_wpeaxf_form_response', $plugin_admin, 'the_form_response');
 
  		// Register admin notices
