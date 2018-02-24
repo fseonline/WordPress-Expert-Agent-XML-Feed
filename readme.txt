@@ -26,7 +26,7 @@ From the admin screen you can:
 1. Go to the `Settings -> WordPress Expert Agent XML Feed` menu to manage settings for fetching the XML feed.
 2. Input your Remote (FTP) Filename e.g. `properties.xml`, as well as your FTP Username and Password.
 3. Click the button ‘Fetch XML File’ to connect to FTP, and download the latest copy of the XML feed.
-4. A scheduler is already set up for you that will automatically download the XML feed daily at 2am.
+4. A scheduler is already set up for you that will automatically download the XML feed every 24 hours.
 
 == Frequently Asked Questions ==
 
