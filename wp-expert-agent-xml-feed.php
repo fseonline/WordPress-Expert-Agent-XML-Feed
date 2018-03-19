@@ -8,13 +8,13 @@
  * that starts the plugin.
  *
  * @link              http://www.fse-online.co.uk
- * @since             1.0.0
+ * @since             1.0.1
  * @package           fse_wpeaxf
  *
  * @wordpress-plugin
  * Plugin Name:       WordPress Expert Agent XML Feed
  * Description:       Fetch daily for your specified Expert Agent XML feed using the WP-Cron system.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            FSE Online Ltd
  * Author URI:        http://www.fse-online.co.uk/?utm_source=wordpress&utm_medium=plugin&utm_campaign=WordPress%20Expert%20Agent%20XML%20Feed
  * License:           GPLv2 or later

@@ -3,7 +3,7 @@ Contributors: fseonline
 Tags: expert agent, xml, feed, ftp, plugin, admin, cron, wp-cron
 Tested up to: 4.9.4
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,10 @@ From the admin screen you can:
 2. Input your Remote (FTP) Filename e.g. `properties.xml`, as well as your FTP Username and Password.
 3. Click the button ‘Fetch XML File’ to connect to FTP, and download the latest copy of the XML feed.
 4. A scheduler is already set up for you that will automatically download the XML feed every 24 hours.
+
+### Gutenberg-Ready
+
+This notice is to mention that you should not have any issues with this plugin and Gutenberg (as this plugin doesn’t have to relate with Gutenberg).
 
 == Frequently Asked Questions ==
 
