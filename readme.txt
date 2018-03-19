@@ -30,7 +30,7 @@ From the admin screen you can:
 
 ### Gutenberg-Ready
 
-This notice is to mention that you should not have any issues with this plugin and Gutenberg (as this plugin doesn’t have to relate with Gutenberg).
+This notice is to mention that you shouldn’t have any issues with this plugin and Gutenberg (as this plugin doesn’t have to relate with Gutenberg).
 
 == Frequently Asked Questions ==
 
