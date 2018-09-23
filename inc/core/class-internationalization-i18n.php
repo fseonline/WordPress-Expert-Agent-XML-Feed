@@ -9,7 +9,7 @@ namespace fse_wpeaxf\Inc\Core;
  * so that it is ready for translation.
  *
  * @link       http://www.fse-online.co.uk
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @author     FSE Online Ltd
  */
@@ -20,7 +20,7 @@ class Internationalization_i18n {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.2
 	 * @param      string $plugin_name       The name of this plugin.
 	 * @param      string $version    The version of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Internationalization_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.2
 	 */
 	public function load_plugin_textdomain() {
 

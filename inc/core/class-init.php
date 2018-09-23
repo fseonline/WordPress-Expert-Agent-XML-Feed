@@ -9,7 +9,7 @@ use fse_wpeaxf\Inc\Admin as Admin;
  * Defines internationalization, admin-specific hooks, and public-facing site hooks.
  *
  * @link       http://www.fse-online.co.uk
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @author     FSE Online Ltd
  */
@@ -26,7 +26,7 @@ use fse_wpeaxf\Inc\Admin as Admin;
  	/**
  	 * The unique identifier of this plugin.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @access   protected
  	 * @var      string    $plugin_base_name    The string used to uniquely identify this plugin.
  	 */
@@ -35,7 +35,7 @@ use fse_wpeaxf\Inc\Admin as Admin;
  	/**
  	 * The current version of the plugin.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @access   protected
  	 * @var      string    $version    The current version of the plugin.
  	 */
@@ -44,7 +44,7 @@ use fse_wpeaxf\Inc\Admin as Admin;
  	/**
  	 * The text domain of the plugin.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @access   protected
  	 * @var      string    $version    The current version of the plugin.
  	 */
@@ -150,7 +150,7 @@ use fse_wpeaxf\Inc\Admin as Admin;
  	/**
  	 * Retrieve the version number of the plugin.
  	 *
- 	 * @since     1.0.0
+ 	 * @since     1.0.2
  	 * @return    string    The version number of the plugin.
  	 */
  	public function get_version() {
@@ -160,7 +160,7 @@ use fse_wpeaxf\Inc\Admin as Admin;
  	/**
  	 * Retrieve the text domain of the plugin.
  	 *
- 	 * @since     1.0.0
+ 	 * @since     1.0.2
  	 * @return    string    The text domain of the plugin.
  	 */
  	public function get_plugin_text_domain() {

@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       http://www.fse-online.co.uk
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @package    fse_wpeaxf
  */

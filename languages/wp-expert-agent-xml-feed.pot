@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Expert Agent XML Feed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-24 15:40+0000\n"
+"POT-Creation-Date: 2018-09-23 05:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,6 +15,9 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/"
 
 #. Description of the plugin
+msgctxt ""
+"Fetch daily for your specified Expert Agent XML feed using the WP-Cron "
+"system."
 msgid ""
 "Fetch daily for your specified Expert Agent XML feed using the WP-Cron "
 "system."
@@ -25,7 +28,6 @@ msgid "FSE Online Ltd"
 msgstr ""
 
 #. Author URI of the plugin
-
 #. Name of the plugin
 msgid "WordPress Expert Agent XML Feed"
 msgstr ""

@@ -8,7 +8,7 @@ namespace fse_wpeaxf\Inc\Core;
  * This class defines all code necessary to run during the plugin's activation.
 
  * @link       http://www.fse-online.co.uk
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @author     FSE Online Ltd
  */
@@ -20,7 +20,7 @@ class Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.2
 	 */
 	public static function activate() {
 

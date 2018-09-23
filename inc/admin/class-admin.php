@@ -9,7 +9,7 @@ namespace fse_wpeaxf\Inc\Admin;
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @link       http://www.fse-online.co.uk
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @author    FSE Online Ltd
  */
@@ -18,7 +18,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	/**
  	 * The ID of this plugin.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @access   private
  	 * @var      string    $plugin_name    The ID of this plugin.
  	 */
@@ -27,7 +27,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	/**
  	 * The version of this plugin.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @access   private
  	 * @var      string    $version    The current version of this plugin.
  	 */
@@ -36,7 +36,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	/**
  	 * The text domain of this plugin.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @access   private
  	 * @var      string    $plugin_text_domain    The text domain of this plugin.
  	 */
@@ -45,7 +45,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	/**
  	 * Initialize the class and set its properties.
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 * @param    string $plugin_name	The name of this plugin.
  	 * @param    string $version	The version of this plugin.
  	 * @param	 string $plugin_text_domain	The text domain of this plugin
@@ -58,7 +58,6 @@ namespace fse_wpeaxf\Inc\Admin;
 
  	}
 
-
   public function plugin_action_links($links) {
 
     $settings_link = '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __( 'Settings', $this->plugin_name ) . '</a>';
@@ -69,7 +68,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	/**
  	 * Callback for the admin menu
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 */
  	public function add_plugin_admin_menu() {
 
@@ -81,7 +80,6 @@ namespace fse_wpeaxf\Inc\Admin;
           $this->plugin_name, //menu_slug
           array( $this, 'html_form_page_content' ) //callback for page content
  					);
-
  	}
 
  	/*
@@ -89,7 +87,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	 *
  	 * The plugin's HTML form is loaded from here
  	 *
- 	 * @since	1.0.0
+ 	 * @since	1.0.2
  	 */
  	public function html_form_page_content() {
  		//show the form
@@ -100,7 +98,7 @@ namespace fse_wpeaxf\Inc\Admin;
   * Fetch the XML file daily through wp-cron.php from within Plugin's cron.php
   * @link     http://expertagent.co.uk/
   *
-  * @since    1.0.0
+  * @since    1.0.2
   */
   public function do_cron_job() {
     $fse_wpeaxf_remote_file = esc_attr( get_option('fse_wpeaxf_remote_file') );
@@ -113,7 +111,7 @@ namespace fse_wpeaxf\Inc\Admin;
 
  	/**
  	 * After form submit, check it's all good
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 */
  	public function the_form_response() {
 
@@ -137,8 +135,7 @@ namespace fse_wpeaxf\Inc\Admin;
  		else {
  			wp_die( __( 'Invalid nonce specified', $this->plugin_name ), __( 'Error', $this->plugin_name ), array(
  						'response' 	=> 403,
- 						'back_link' => 'admin.php?page=' . $this->plugin_name,
-
+ 						'back_link' => 'admin.php?page=' . $this->plugin_name
  				) );
  		}
  	}
@@ -146,7 +143,7 @@ namespace fse_wpeaxf\Inc\Admin;
  	/**
  	 * Redirect
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 */
  	public function custom_redirect( $admin_notice ) {
  		wp_redirect( esc_url_raw( add_query_arg( array(
@@ -154,14 +151,12 @@ namespace fse_wpeaxf\Inc\Admin;
  									),
  							admin_url( 'admin.php?page='. $this->plugin_name )
  					) ) );
-
  	}
-
 
  	/**
  	 * Print Admin Notices
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 */
  	public function print_plugin_admin_notices() {
  		  if ( isset( $_REQUEST['fse_wpeaxf_admin_add_notice'] ) ) {
@@ -173,8 +168,8 @@ namespace fse_wpeaxf\Inc\Admin;
         $local_file_path = $plugin_upload_dir_xml . $file;
 
  				$html =	'<div class="notice notice-success is-dismissible">
- 							<p><strong>The XML file fetch is successful. </strong></p>';
- 				$html .= '<p>Your file should be found in <code>' . $local_file_path . '</code></p></div>';
+ 							<p><strong>' . __( 'The XML file fetch is successful.', $this->plugin_name ) . '</strong></p>';
+ 				$html .= '<p>' . __( 'Your file should be found in', $this->plugin_name ) . '<code>' . $local_file_path . '</code></p></div>';
  				echo $html;
  			}
 
@@ -190,7 +185,7 @@ namespace fse_wpeaxf\Inc\Admin;
   /**
  	 * Download the XML from the user-specified FTP Server
  	 *
- 	 * @since    1.0.0
+ 	 * @since    1.0.2
  	 */
   public function download_xml( $remote_file, $remote_user, $remote_pass )  {
     // Continue if FTP extension exists on the PHP server
@@ -210,22 +205,21 @@ namespace fse_wpeaxf\Inc\Admin;
       // make sure it's XML since that's what we do!
       if( $extension !== 'xml' ) {
         update_option( 'fse_wpeaxf_remote_file', '' );
-        exit( 'File does not exist. Please specify an XML file. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>.' );
+        exit( __( 'File does not exist. Please specify an XML file.', $this->plugin_name ) . ' <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">' . __( 'Go back', $this->plugin_name ) . '</a>.' );
       }
 
       //#STEP 2 - Download File
       $ftp_connection = ftp_connect( $ftp_host, $ftp_port, $ftp_timeout );
       if( !$ftp_connection ) {
-        exit( 'Could not connect to FTP at the moment. Please check your FTP server status and try again. <br />If unsure, please contact Expert Agent at support@expertagent.co.uk <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
+        exit( __( 'Could not connect to FTP at the moment. Please check your FTP server status and try again.', $this->plugin_name ) . ' <br />' . __( 'If unsure, please contact Expert Agent at', $this->plugin_name ) . ' support@expertagent.co.uk <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">' . __( 'Go back', $this->plugin_name ) . '</a>' );
       }
 
       $login_result = ftp_login( $ftp_connection, $ftp_username, $ftp_password );
       if( !$login_result ) {
-        exit( 'Login details did not match. Please check your FTP login details and try again. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
+        exit( __( 'Login details did not match. Please check your FTP login details and try again.', $this->plugin_name ) . ' <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">' . __( 'Go back', $this->plugin_name ) . '</a>' );
       }
 
       $plugin_basename = explode( "/", plugin_basename( __FILE__ ), 2 )[0]; // get the plugin's directory name
-
 
       $upload_dir = wp_upload_dir(); // Array of key => value pairs
       $plugin_upload_dir = $upload_dir['basedir'] . '/' . $plugin_basename . '/';
@@ -250,10 +244,8 @@ namespace fse_wpeaxf\Inc\Admin;
 
     } else {
 
-      exit( 'Please enable FTP on your server before proceeding. <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">Go back</a>' );
+      exit( __( 'Please enable FTP on your server before proceeding.', $this->plugin_name ) . ' <a href="' . admin_url('admin.php?page='. $this->plugin_name ) . '">' . __( 'Go back', $this->plugin_name ) . '</a>' );
 
     }
   }
-
-
  }

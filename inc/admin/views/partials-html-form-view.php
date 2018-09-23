@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing aspects of the plugin.
  *
  * @link       http://www.fse-online.co.uk
- * @since      1.0.0
+ * @since      1.0.2
  *
  * @package    fse_wpeaxf
  * @subpackage fse_wpeaxf/inc/admin/views
@@ -21,8 +21,8 @@ if( current_user_can( 'edit_users' ) ) {
 
 	if( !function_exists('ftp_connect') ) {
   		// Hide form FTP is not enabled on the server
-  		echo '<div class="wrap"><h1>WordPress Expert Agent XML Feed</h1><div class="notice notice-error"><p><strong>FTP is required</strong> to use this plugin. Please inform your server administrator to <a target="_blank" href="https://stackoverflow.com/questions/39841936/enabling-ftp-functions-in-existing-php-install">enable FTP</a> on your server.</p></div>
-  		<p>Sorry, we require FTP enabled on your server. Please see the error above.</p></div>';
+  		echo '<div class="wrap"><h1>WordPress Expert Agent XML Feed</h1><div class="notice notice-error"><p><strong>' . __( 'FTP is required', $this->plugin_name ) . '</strong> ' . __( 'to use this plugin.', $this->plugin_name ) . ' ' . __( 'Please inform your server administrator to', $this->plugin_name ) . ' <a target="_blank" href="https://stackoverflow.com/questions/39841936/enabling-ftp-functions-in-existing-php-install">' . __( 'enable FTP', $this->plugin_name ) . '</a> ' . __( 'on your server.', $this->plugin_name ) . '</p></div>
+  		<p>' . __( 'Sorry, we require FTP enabled on your server. Please see the error above.', $this->plugin_name ) . '</p></div>';
   		die();
   }
 
@@ -41,7 +41,7 @@ if( current_user_can( 'edit_users' ) ) {
 		<?php settings_fields( 'fse_wpeaxf_settings_group' ); ?>
 		<?php do_settings_sections( 'fse_wpeaxf_settings_group' ); ?>
 		<table class="form-table">
-			<p>Please enter your FTP login details as provided by Expert Agent (<a target="_blank" href="http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed">more info here</a>) so that we can fetch daily for your XML feed.</p>
+			<p><?php _e( 'Please enter your FTP login details as provided by Expert Agent', $this->plugin_name ); ?> (<a target="_blank" href="http://learningcentre.expertagent.co.uk/ea-manual/using-ea-data-in-your-website/the-two-methods/method-3-xml-feed"><?php _e( 'more info here', $this->plugin_name ); ?></a>) <?php _e( 'so that we can fetch daily for your XML feed.', $this->plugin_name ); ?></p>
 			<tr valign="top">
 				<th scope="row"><?php _e('Remote File', $this->plugin_name); ?></th>
 				<td>
@@ -81,6 +81,6 @@ if( current_user_can( 'edit_users' ) ) {
 <?php }
 else {
 ?>
-	<p> <?php __("You are not authorized to perform this operation.", $this->plugin_name) ?> </p>
+	<p><?php _e('You are not authorized to perform this operation.', $this->plugin_name); ?></p>
 <?php
 }
